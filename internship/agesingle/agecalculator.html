@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Age Calculator</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f8f8f8;
+  }
+  .calculator {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+  }
+  input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  button:hover {
+    background-color: #2980b9;
+  }
+  #result {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+  }
+</style>
+</head>
+<body>
+<div class="calculator">
+  <h2 style="color: #3498db;">Age Calculator</h2>
+  <input type="date" id="dob">
+  <button onclick="calculateAge()">Calculate</button>
+  <div id="result"></div>
+</div>
+
+<script>
+function calculateAge() {
+  var dob = document.getElementById("dob").value;
+  
+  // Check if the date input is empty
+  if (!dob) {
+    alert("Please enter your date of birth.");
+    return;
+  }
+  
+  // Check if the input is a valid date
+  var dobDate = new Date(dob);
+  if (isNaN(dobDate.getTime())) {
+    alert("Please enter a valid date.");
+    return;
+  }
+  
+  var today = new Date();
+  
+  var age = today.getFullYear() - dobDate.getFullYear();
+  var month = today.getMonth() - dobDate.getMonth();
+  var day = today.getDate() - dobDate.getDate();
+  
+  if (month < 0 || (month === 0 && today.getDate() < dobDate.getDate())) {
+    age--;
+    month += 12;
+  }
+  
+  if (day < 0) {
+    month--;
+    var daysInLastMonth = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+    day += daysInLastMonth;
+  }
+  
+  var result = "You are " + age + " years, " + month + " months, and " + day + " days old.";
+  document.getElementById("result").innerHTML = result;
+}
+</script>
+</body>
+</html>
